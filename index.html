@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function() {
+    var GA_ID = 'G-882PQTQ8VF';
+    var isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+    if (isLocalDev) return;
+    try { if (/[?&]no_ga=0/.test(location.search)) localStorage.removeItem('no_ga'); if (/[?&]no_ga=1/.test(location.search)) localStorage.setItem('no_ga', '1'); if (localStorage.getItem('no_ga') === '1') return; } catch (e) {}
+    var gaQ = new URLSearchParams(location.search); if (gaQ.get('obs') === '1' || gaQ.get('no_ga') === '1') return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+    document.addEventListener('click', function(e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href*="booth.pm"]:not([href*="/search"])') : null;
+      if (!a) return;
+      gtag('event', 'booth_click', { link_url: a.href, link_id: a.id || '', link_text: (a.textContent || '').trim().slice(0, 40) });
+    });
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="メニュー表を無料で作成・印刷(登録不要)。品名と値段を書くだけで、カフェ風・黒板風・結婚式・学園祭のおしゃれなメニュー表に。A4縦・横、2段・3段、文字の大きさは自動でA4に収めます。画像(PNG)で保存も。">
+<link rel="canonical" href="https://uuhai0625.github.io/menu-hyo/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="メニュー表メーカー|おしゃれなメニュー表を無料で作成・印刷">
+<meta property="og:description" content="メニュー表を無料で作成・印刷(登録不要)。品名と値段を書くだけで、カフェ風・黒板風・結婚式・学園祭のおしゃれなメニュー表に。A4縦・横、2段・3段、文字の大きさは自動でA4に収めます。画像(PNG)で保存も。">
+<meta property="og:url" content="https://uuhai0625.github.io/menu-hyo/">
+<meta property="og:image" content="https://uuhai0625.github.io/menu-hyo/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>メニュー表メーカー|おしゃれなメニュー表を無料で作成・印刷</title>
+<style>
+  :root {
+    --bg: #f7f3ee;
+    --panel: #ffffff;
+    --border: #e6ddd2;
+    --field-border: #6b5f55;
+    --text: #2b231d;
+    --muted: #5f544b;
+    --accent: #8a5a3b;
+    --accent-dark: #643f27;
+    --ng: #b3261e;
+    --locked: #dccfc2;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  header { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; padding: 24px 20px 18px; text-align: center; }
+  header h1 { margin: 0 0 6px; font-size: 1.35rem; }
+  header p { margin: 0; font-size: .9rem; }
+  main { max-width: 1040px; margin: 0 auto; padding: 22px 16px 50px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+  .layout > div { min-width: 0; }
+  .layout > .col-pv { position: sticky; top: 12px; }
+  section.card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+  section.card h2 { margin: 0 0 6px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .desc { color: var(--muted); font-size: .84rem; margin: 0 0 12px; }
+  .fine { color: var(--muted); font-size: .8rem; margin: 8px 0 0; }
+  .badge { display: inline-block; font-size: .7rem; padding: 2px 8px; border-radius: 999px; background: #fff1cc; color: #7a5600; font-weight: bold; }
+  .hidden { display: none !important; }
+  label.field { display: block; margin-bottom: 12px; }
+  .lbl { font-size: .85rem; font-weight: bold; display: block; }
+  .hint { font-size: .78rem; color: var(--muted); font-weight: normal; display: block; margin-top: 2px; }
+  input[type=text], input[type=file], select, textarea { width: 100%; margin-top: 5px; padding: 8px 10px; min-height: 44px; border: 1px solid var(--field-border); border-radius: 8px; font-size: 16px; font-family: inherit; background: #fff; color: var(--text); }
+  textarea { min-height: 260px; line-height: 1.55; }
+  input[type=color] { width: 56px; height: 44px; margin-top: 5px; }
+  .row2 { display: flex; gap: 12px; }
+  .row2 > * { flex: 1; min-width: 0; }
+  .btn-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .btn { min-height: 44px; padding: 9px 16px; border-radius: 8px; font-size: .88rem; cursor: pointer; border: 1px solid var(--field-border); background: #fff; color: var(--text); font-family: inherit; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+  .btn.link, .linkbtn { border: 0; background: none; color: var(--accent-dark); text-decoration: underline; padding: 10px 0; min-height: 44px; cursor: pointer; font-family: inherit; font-size: .84rem; display: inline-block; }
+  .btn:disabled { opacity: .6; cursor: default; }
+  .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+  .btn-row .btn { flex: 1; }
+  .status { font-size: .82rem; color: var(--muted); margin-top: 6px; min-height: 1.2em; }
+  .status.err { color: var(--ng); font-weight: bold; }
+  .preview { border: 1px solid var(--border); border-radius: 8px; background: #e9e2d9; padding: 12px; text-align: center; }
+  .preview img { max-width: 100%; max-height: 64vh; height: auto; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+  .info { font-size: .84rem; margin-top: 8px; }
+  .warn { font-size: .84rem; margin-top: 8px; padding: 8px 10px; border-radius: 8px; background: #fff4e0; border: 1px solid #e6b45c; color: #5c3b00; }
+  .warn:empty { display: none; }
+  .presets { display: flex; flex-wrap: wrap; gap: 6px; }
+  .presets .btn { flex: 0 0 auto; padding: 6px 12px; font-size: .82rem; }
+  .guide { font-size: .86rem; }
+  .guide ul, .guide ol { padding-left: 1.3em; margin: 6px 0; }
+  .guide li { margin: 4px 0; }
+  .guide code { background: #f3ede6; padding: 1px 5px; border-radius: 4px; }
+  .locked-panel { border: 1px dashed var(--locked); border-radius: 10px; padding: 16px; text-align: center; color: var(--muted); background: #fbf8f4; }
+  .locked-panel .lead { color: var(--text); font-weight: bold; }
+  .locked-panel .feat-list { text-align: left; max-width: 600px; margin: 10px auto; font-size: .85rem; padding-left: 1.2em; }
+  .buy-btn { display: inline-block; margin-top: 8px; background: var(--accent-dark); color: #fff; font-weight: bold; padding: 11px 22px; border-radius: 999px; text-decoration: none; font-size: .9rem; }
+  footer { max-width: 1040px; margin: 0 auto; padding: 0 16px 40px; font-size: .8rem; color: var(--muted); }
+  footer a { color: var(--muted); display: inline-block; padding: 10px 0; }
+  #printArea img { display: block; }
+  @media screen { #printArea { display: none; } }
+  @media print {
+    body { background: #fff; }
+    body > *:not(#printArea) { display: none !important; }
+  }
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    .layout > .col-pv { position: sticky; top: 0; z-index: 5; }
+    .layout > .col-pv section.card { margin-bottom: 10px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .layout > .col-pv .fine, .layout > .col-pv .info { display: none; }
+    .layout > .col-pv .preview img { max-height: 26vh; }
+    .layout > .col-pv h2 { display: none; }
+    html { scroll-padding-top: 240px; }
+  }
+  @media (max-width: 600px) {
+    .row2 { flex-direction: column; gap: 0; }
+    section.card { padding: 16px 14px; }
+  }
+</style>
+<style id="pageStyle">@media print { @page { size: A4 portrait; margin: 0; } #printArea img { width: 209mm; height: 296mm; } }</style>
+<!--ANSHIN_CSS_START--><style>:root{--anshin-w:1008px;--anshin-pad:16px}.anshin-strip,.anshin{box-sizing:border-box;width:min(var(--anshin-w),calc(100% - 2 * var(--anshin-pad)));margin-left:auto;margin-right:auto}.anshin-strip{list-style:none;margin-top:10px;margin-bottom:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.8rem;line-height:1.5}.anshin-strip li{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border:1px solid rgba(20,120,90,.45);border-radius:999px;background:rgba(20,120,90,.07)}.anshin-strip li.anshin-more{border:0;background:none;padding:3px 2px}.anshin-strip a,.anshin a{color:inherit}.anshin{margin-top:18px;margin-bottom:18px;padding:14px 18px;border:1px solid rgba(20,120,90,.45);border-radius:10px;background:rgba(20,120,90,.05);font-size:.86rem;line-height:1.7}.anshin h2{font-size:1rem;margin:0 0 6px}.anshin p{margin:0 0 6px}.anshin ul{margin:0;padding-left:1.2em}.anshin li{margin:3px 0}.anshin details{margin-top:6px}.anshin summary{cursor:pointer;font-weight:bold}.anshin .anshin-meta{margin:8px 0 0;font-size:.8rem;opacity:.85}@media print{.anshin,.anshin-strip{display:none!important}}</style><!--ANSHIN_CSS_END-->
+<!--UPSELL_CSS_START--><style>.upsell-top{box-sizing:border-box;width:min(var(--anshin-w,880px),calc(100% - 2 * var(--anshin-pad,16px)));margin:12px auto 0;font-size:.85rem;line-height:1.6}.upsell-top a{color:inherit}.upsell-assure{list-style:none;margin:12px 0 10px;padding:0;display:flex;flex-wrap:wrap;gap:6px 8px;font-size:.8rem;line-height:1.5}.upsell-assure li{padding:3px 10px;border:1px solid rgba(20,120,90,.45);border-radius:12px;background:rgba(20,120,90,.06)}.upsell-terms{margin:8px 0 0;font-size:.78rem;line-height:1.6;opacity:.85}.upsell-toast{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;box-sizing:border-box;width:min(520px,calc(100% - 24px));padding:14px 56px 14px 16px;border-radius:12px;background:#fff;color:#222;border:1px solid #c9c2d6;box-shadow:0 6px 24px rgba(0,0,0,.18);font-size:.88rem;line-height:1.6}.upsell-toast p{margin:0 0 6px;font-weight:bold}.upsell-toast ul{margin:0 0 10px;padding-left:1.2em}.upsell-toast li{margin:2px 0}.upsell-toast .upsell-note{display:block;margin-top:6px;font-size:.75rem;color:#555}.upsell-toast .upsell-go{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:8px;background:#c9283e;color:#fff;font-weight:bold;text-decoration:none}.upsell-toast.upsell-calm .upsell-go{background:#3f4a63}.upsell-toast .upsell-go:focus-visible,.upsell-toast .upsell-x:focus-visible{outline:3px solid #2560c4;outline-offset:2px}.upsell-toast .upsell-x{position:absolute;top:4px;right:4px;width:44px;height:44px;border:0;border-radius:8px;background:transparent;color:#555;font-size:1.3rem;line-height:1;cursor:pointer}.upsell-inline{white-space:nowrap;color:inherit;text-decoration:underline;text-underline-offset:2px}@media print{.upsell-top,.upsell-assure,.upsell-terms,.upsell-toast,.upsell-inline{display:none!important}}</style><!--UPSELL_CSS_END-->
+<!--JSONLD_START--><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"メニュー表メーカー(無料のメニュー表作成ツール)","url":"https://uuhai0625.github.io/menu-hyo/","description":"メニュー表を無料で作成・印刷(登録不要)。品名と値段を書くだけで、カフェ風・黒板風・結婚式・学園祭のおしゃれなメニュー表に。A4縦・横、2段・3段、文字の大きさは自動でA4に収めます。画像(PNG)で保存も。","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"ja","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"uuhai0625","url":"https://uuhai0625.github.io/"}}</script><!--JSONLD_END-->
+</head>
+<body>
+
+<header>
+  <h1>メニュー表メーカー(無料のメニュー表作成ツール)</h1>
+  <p>品名と値段を書くだけで、カフェ風・黒板風・結婚式などのおしゃれなメニュー表に。A4で印刷、画像(PNG)で保存もできます。文字の大きさは自動で調整します。登録不要・ブラウザだけで使えます</p>
+</header>
+<!--ANSHIN_STRIP_START-->
+<ul class="anshin-strip" aria-label="データの扱い">
+  <li><span aria-hidden="true">✓</span> 入力内容はこの端末の中だけで処理</li>
+  <li><span aria-hidden="true">✓</span> 登録・ログイン不要</li>
+  <li><span aria-hidden="true">✓</span> 仕組みを公開中</li>
+  <li class="anshin-more"><a href="#anshin">データの扱いをくわしく</a></li>
+</ul>
+<!--ANSHIN_STRIP_END-->
+<!--UPSELL_TOP_START--><p class="upsell-top no-print" id="upsellTop">このページは無料のまま使えます。機能を増やしたい方は <a href="#pro-section">買い切り版(¥100・1回払い)<span aria-hidden="true"> ↓</span></a></p><!--UPSELL_TOP_END-->
+
+<main>
+<div class="layout">
+<div>
+
+  <section class="card" id="text-card">
+    <h2>① 名前とメニュー</h2>
+    <p class="desc">例から選ぶと、名前・メニュー・デザインが入ります(今の中身は置きかわります)。</p>
+    <div class="presets" id="presets" role="group" aria-label="例から選ぶ"></div>
+    <label class="field" style="margin-top:12px;">
+      <span class="lbl">お店・会の名前</span>
+      <input type="text" id="in-title" maxlength="24" value="" placeholder="例: Cafe こもれび" data-save>
+    </label>
+    <label class="field">
+      <span class="lbl">名前の下の小さい文字</span>
+      <input type="text" id="in-sub" maxlength="40" value="" placeholder="例: MENU/2年3組 模擬店" data-save>
+    </label>
+    <label class="field">
+      <span class="lbl">メニュー</span>
+      <span class="hint" id="menuHint">1行に1品、「品名/値段/説明」の形で書きます(値段と説明はなくてもOK)。例: <code>ブレンドコーヒー/450/深煎りの豆で</code><br>「# ドリンク」のように # で始まる行は見出しに、「×」で始まる品は「売り切れ」になります。値段は税込の金額で。</span>
+      <textarea id="in-menu" maxlength="4000" data-save aria-describedby="menuHint" placeholder="# ドリンク&#10;ブレンドコーヒー/450/深煎りの豆で&#10;カフェラテ/500&#10;# フード&#10;たまごサンド/650"></textarea>
+    </label>
+    <label class="field">
+      <span class="lbl">いちばん下の小さい文字</span>
+      <input type="text" id="in-foot" maxlength="60" value="" placeholder="例: 表示価格はすべて税込です" data-save>
+    </label>
+    <div class="status" id="menuSt" role="status"></div>
+    <button class="btn link" type="button" id="resetAll">入力を全部消す</button>
+  </section>
+
+  <section class="card" id="design-card">
+    <h2>② デザイン</h2>
+    <div class="row2">
+      <label class="field">
+        <span class="lbl">デザイン</span>
+        <select id="in-theme" data-save>
+          <option value="cafe" selected>カフェ(クリームと茶色)</option>
+          <option value="board">黒板風</option>
+          <option value="natural">ナチュラル(白と緑)</option>
+          <option value="wedding">結婚式(白と金・明朝)</option>
+          <option value="pop">ポップ(学園祭・お祭り)</option>
+          <option value="mono">モノクロ(インク節約)</option>
+          
+        </select>
+      </label>
+      <label class="field">
+        <span class="lbl">紙の向きと段</span>
+        <select id="in-layout" data-save>
+          <option value="p1" selected>A4縦・1段</option>
+          <option value="p2">A4縦・2段</option>
+          <option value="l2">A4横・2段</option>
+          <option value="l3">A4横・3段</option>
+        </select>
+      </label>
+    </div>
+    <div class="row2">
+      <label class="field">
+        <span class="lbl">値段の書き方</span>
+        <select id="in-yen" data-save>
+          <option value="en" selected>450円</option>
+          <option value="yen">¥450</option>
+          <option value="raw">書いたまま</option>
+        </select>
+      </label>
+      
+    </div>
+    
+    <a class="linkbtn" id="moreLink" href="#pro-section">ロゴ・写真を入れる、好きな色(パソコン用・買い切り版¥100)</a>
+  </section>
+
+</div>
+<div class="col-pv">
+  <section class="card" id="result-card">
+    <h2>③ 見本・印刷・保存</h2>
+    <div class="preview"><img id="pvImg" alt="メニュー表の見本"></div>
+    <div class="warn" id="warn" aria-live="polite"></div>
+    <div class="info" id="info"></div>
+    <div class="btn-row">
+      <button class="btn primary" type="button" id="printBtn">A4に印刷する</button>
+      <button class="btn" type="button" id="saveBtn">画像で保存(PNG)</button>
+    </div>
+    <div class="status" id="st" role="status"></div>
+    <ul class="fine" style="padding-left:1.2em;">
+      <li>印刷はA4で、「用紙に合わせる」はオフ(倍率100%)にします。A4横のときは、印刷画面でも「横」を選んでください(スマホのブラウザは向きが変わらないことがあります)。</li>
+      <li>黒板風はインクを多く使います。家で何枚も刷るときはモノクロもどうぞ。</li>
+      <li>画像はSNSやお店のページに載せるときに。</li>
+    </ul>
+  </section>
+</div>
+</div>
+
+  <section class="card" id="pro-section">
+    <h2>ロゴ・写真を入れる・好きな色 <span class="badge">買い切り版 ¥100(税込)</span></h2>
+    <div class="locked-panel">
+      <p class="lead">結婚式のふたりの写真、クラスのイラスト、お店のロゴを入れたメニュー表に。</p>
+      <p>このページの機能は無料でそのまま使えます。買い切り版(ダウンロード購入)では、次の機能が増えます:</p>
+      <ul class="feat-list">
+        <li><strong>ロゴ・写真を入れる</strong>(名前の上に。お店のロゴ、ふたりの写真、クラスのイラストなど)</li>
+        <li><strong>好きな色</strong>(お店やテーマの色に)</li>
+        <li><strong>パソコンで使うHTMLファイルです</strong>(スマホでの動作は保証していません。スマホの方は、このページの無料版をお使いください)。ダブルクリックで開くだけ、ネットにつながっていなくても使えます</li>
+      </ul>
+      <p class="fine">※買い切り版はパソコン(Windows・Mac)用です。iPad・スマホでは使えません。</p>
+<!--UPSELL_ASSURE_START--><ul class="upsell-assure" aria-label="買い切り版について"><li>¥100(税込)の1回払い・月額なし</li><li>パソコン向けのHTMLファイル(スマホでは開けない機種あり)</li><li>ネットにつながっていなくても動く</li><li>BOOTHで購入(クレジットカード・楽天ペイは手数料なし、コンビニ・銀行払いは別途手数料)</li></ul><!--UPSELL_ASSURE_END-->
+      <a class="buy-btn" href="https://uuhai0625.booth.pm/items/9216659" id="buyLink" target="_blank" rel="noopener">買い切り版を見る(BOOTH・新しいタブ)</a><!--UPSELL_TERMS_START--><p class="upsell-terms">販売者の情報・返品などの販売条件は、BOOTHの商品ページでご確認ください。BOOTHでの購入にはpixivのアカウントが必要です。</p><!--UPSELL_TERMS_END-->
+    </div>
+  </section>
+
+  <section class="card guide" id="guide">
+    <h2>メニュー表の作り方</h2>
+    <ol>
+      <li>①にお店・会の名前と、メニューを1行に1品ずつ書きます。例: <code>ブレンドコーヒー/450/深煎りの豆で</code></li>
+      <li>見出しは <code># ドリンク</code> のように # を先頭に付けます。</li>
+      <li>②でデザインと紙の向きを選びます。文字の大きさはA4に収まるように自動で決まります(入りきらないときは注意が出ます)。</li>
+      <li>「A4に印刷する」か「画像で保存」で仕上げます。</li>
+    </ol>
+    <h2 style="margin-top:16px;">よくある疑問</h2>
+    <ul>
+      <li><strong>何に使える?</strong> カフェ・小さなお店のメニュー、結婚式・パーティーのお料理やドリンクのメニュー、学園祭の模擬店、おうちカフェ・おままごとなどに。</li>
+      <li><strong>お店の値段の書き方は?</strong> 事業としてお客さんに値段を見せるお店は、税込の総額で表示することが求められています(消費税の総額表示)。このツールは消費税を計算しないので、税込の金額を入れてください。下の小さい文字に「表示価格はすべて税込です」と入れておくと安心です。学園祭やおうちでの遊びなど、事業ではない場合は対象外のことが多いです。実際の扱いは税務署などにご確認ください。</li>
+      <li><strong>アレルギーの表示は?</strong> 説明欄に書けますが、このツールは中身を確かめません。外食のアレルゲン表示は法律上の義務ではありませんが、書く場合は正確に。学園祭などは主催の決まりも確かめてください。</li>
+      <li><strong>入れた内容は?</strong> 文字や画像はこのブラウザの中だけで処理し、外部には送信しません(文字は次に開いたとき用に、このブラウザに保存されます。画像は保存しません)。</li>
+    </ul>
+  </section>
+
+</main>
+
+<!--ANSHIN_START-->
+<section class="anshin" id="anshin" aria-labelledby="anshin-title">
+  <h2 id="anshin-title">データの扱いについて</h2>
+  <p>このページには、入力した内容を受け取る仕組みがありません。入力した文字や数字は、あなたのスマホやパソコンの中だけで処理されます。</p>
+  <ul>
+    <li>会員登録・ログイン・メールアドレスの入力はありません。</li>
+    <li>自分で確かめたい方へ: ページを開いたあと機内モードにしても、そのまま使えます。</li>
+  </ul>
+  <details>
+    <summary>もっとくわしく(保存・アクセス解析・公開について)</summary>
+    <ul>
+      <li>保存されるデータは、この端末のこのブラウザの中にだけ残ります(localStorage・sessionStorage)。共用のパソコンでは使い終わったら消してください。</li>
+      <li>アクセス解析(Google Analytics)のため、見たページのURL・参照元・端末やブラウザの種類・おおよその地域(IPアドレスから推定)・Cookieの識別子・BOOTHへのリンクのクリック・どのボタンを押したか(回数や選んだ設定を含む)がGoogleに送られます。目的は利用状況の把握です。入力した文字や画像は送りません。(<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener">Googleによるデータの使用</a>/<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener">計測を止めるアドオン</a>。止めてもツールはそのまま使えます)</li>
+      <li>このツールの結果や作成物は目安です。入稿・契約・販売などの前には、印刷所や公式の情報でご確認ください。</li>
+      <li>処理の中身はすべて公開しています(詳しい方向け: <a href="https://github.com/uuhai0625/menu-hyo" target="_blank" rel="noopener">GitHub</a>)。</li>
+    </ul>
+  </details>
+  <p class="anshin-meta">作っている人: ウーハイ(個人開発)/不具合・ご質問は<a href="https://x.com/uuhai0625" target="_blank" rel="noopener">X(@uuhai0625)</a>へ/<a href="https://uuhai0625.github.io/" target="_blank" rel="noopener">ほかのツール</a>/この説明の更新日: 2026-10-13</p>
+</section>
+<!--ANSHIN_END-->
+
+<footer>
+  <p id="privacyNote">本ツールは完全にブラウザ内で動作し、入力した内容はどこにも送信されません。</p>
+  <p><a href="https://uuhai0625.booth.pm/" target="_blank" rel="noopener">他のツールも見る(BOOTHショップ)</a></p>
+  <p>不具合・ご要望は X <a href="https://x.com/uuhai0625" target="_blank" rel="noopener">@uuhai0625</a> まで。</p>
+  <p class="related-tools no-print">関連する無料ツール: <a href="https://uuhai0625.github.io/nefuda-maker/" target="_blank" rel="noopener">値札メーカー</a> ・ <a href="https://uuhai0625.github.io/kondate-hyo/" target="_blank" rel="noopener">献立表メーカー</a> ・ <a href="https://uuhai0625.github.io/#free-tools">ツール一覧</a></p>
+</footer>
+
+<div id="printArea"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var EDITION = "free"; // "full" で買い切り完全版
+
+  function track(name, params) {
+    if (!window.dataLayer) return;
+    (function () { window.dataLayer.push(arguments); })("event", name, params || {});
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === "class") e.className = attrs[k]; else e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function setSt(id, msg, err) { var e = $(id); e.textContent = msg; e.classList.toggle("err", !!err); }
+
+  var LAST_KEY = "menu_hyo_last_v1";
+  var A4S = 2480, A4L = 3508;
+  var GOTHIC = '"Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Meiryo", sans-serif';
+  var MINCHO = '"Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "MS PMincho", serif';
+  var THEMES = {
+    cafe:    { bg: "#fbf6ee", ink: "#3b2a20", accent: "#8a5a3b", sub: "#7a6a5c", frame: "#8a5a3b", serifTitle: true },
+    board:   { bg: "#26392f", ink: "#f3f1e8", accent: "#f2d27a", sub: "#cfd8cf", frame: "#8a6440", wood: true },
+    natural: { bg: "#ffffff", ink: "#2b3a2e", accent: "#4f7a42", sub: "#5f6e61", frame: "#a9c79d" },
+    wedding: { bg: "#fffdf8", ink: "#3a3530", accent: "#9a7535", sub: "#6e665c", frame: "#cdb27a", serif: true, serifTitle: true },
+    pop:     { bg: "#fff7e0", ink: "#2a2a2a", accent: "#c93a26", sub: "#6a5d4a", frame: "#e2503c", pill: true },
+    mono:    { bg: "#ffffff", ink: "#1e1e1e", accent: "#1e1e1e", sub: "#555555", frame: "#1e1e1e" }
+  };
+  var LAYOUTS = { p1: [false, 1], p2: [false, 2], l2: [true, 2], l3: [true, 3] };
+  var PRESETS = {
+    "カフェ": ["Cafe こもれび", "MENU", "# ドリンク\nブレンドコーヒー/450/深煎りの豆をハンドドリップで\nカフェラテ/500\n紅茶(ホット・アイス)/450\nオレンジジュース/400\n# フード\nたまごサンド/650/ふわふわの厚焼きたまご\nナポリタン/800\n本日のキッシュ/700\n# スイーツ\n本日のケーキ/500\nプリン/400/昔ながらのかためプリン\n# セット\nケーキセット/850/お好きなドリンク付き", "表示価格はすべて税込です"],
+    "結婚式": ["Wedding Dinner", "Taro & Hanako", "# Appetizer\n季節の前菜の盛り合わせ\n# Soup\nかぼちゃのポタージュ\n# Fish\n真鯛のポワレ 白ワインソース\n# Meat\n国産牛フィレ肉のロースト\n# Dessert\nウェディングケーキとフルーツ\n# Drink\nコーヒー・紅茶", "本日はお越しいただき ありがとうございます"],
+    "学園祭": ["2年3組 たこ焼き屋", "文化祭 模擬店", "# フード\nたこ焼き(6個)/300\nたこ焼き(10個)/450\nフランクフルト/200\n# ドリンク\nラムネ/150\nお茶/100", "売り切れの際はごめんなさい"],
+    "おうちカフェ": ["おうちカフェ", "きょうのメニュー", "# のみもの\nココア/100\nりんごジュース/100\n# おやつ\nホットケーキ/200/はちみつつき\nクッキー/50", ""]
+  };
+
+  // 買い切り版で差し替えるフック
+  var extendSettings = function (s) { return s; };
+  var syncExtra = function () {};
+
+  function oneLine(v, n) { return Array.from(String(v == null ? "" : v).replace(/\s+/g, " ").trim()).slice(0, n).join(""); }
+
+  Object.keys(PRESETS).forEach(function (k) {
+    var b = el("button", { class: "btn", type: "button" }, k);
+    b.addEventListener("click", function () {
+      var edited = $("in-menu").value.trim() && ($("in-menu").value !== lastPresetMenu || $("in-title").value !== lastPresetTitle);
+      if (edited && !window.confirm("今の名前・メニュー・デザインを、例の「" + k + "」に置きかえます。よろしいですか?")) return;
+      var p = PRESETS[k];
+      $("in-title").value = p[0]; $("in-sub").value = p[1]; $("in-menu").value = p[2]; $("in-foot").value = p[3];
+      lastPresetMenu = p[2]; lastPresetTitle = p[0];
+      $("in-theme").value = { "結婚式": "wedding", "学園祭": "pop", "カフェ": "cafe", "おうちカフェ": "natural" }[k] || "cafe";
+      changed(); setSt("st", "例の「" + k + "」を入れました。");
+    });
+    $("presets").appendChild(b);
+  });
+  var lastPresetMenu = "", lastPresetTitle = "";
+
+  function fmtPrice(p, mode) {
+    p = oneLine(p, 16);
+    if (!p || mode === "raw") return p;
+    var n = p.replace(/[,，円¥￥\s]/g, "").replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
+    if (!/^\d{1,9}$/.test(n)) return p;
+    var s = Number(n).toLocaleString("ja-JP");
+    return mode === "yen" ? "¥" + s : s + "円";
+  }
+  function parseMenu(text, mode) {
+    var blocks = [];
+    String(text || "").split(/\r?\n/).forEach(function (line) {
+      line = line.trim(); if (!line) return;
+      if (/^[#＃]/.test(line)) { var h = oneLine(line.replace(/^[#＃]+/, ""), 24); if (h) blocks.push({ t: "h", text: h }); return; }
+      var p = line.split(/[\/／\t]/), nm = oneLine(p[0], 30), sold = /^[×✕xX]\s*/.test(nm) && nm.length > 1 && /^[×✕]/.test(nm);
+      if (sold) nm = oneLine(nm.replace(/^[×✕]\s*/, ""), 30);
+      if (!nm) return;
+      blocks.push({ t: "i", name: nm, price: fmtPrice(p[1], mode), desc: oneLine(p.slice(2).join("/"), 50), sold: sold });
+    });
+    parseMenu.cut = Math.max(0, blocks.length - 120);
+    return blocks.slice(0, 120);
+  }
+
+  function settings() {
+    var lay = LAYOUTS[$("in-layout").value] ? $("in-layout").value : "p1";
+    var s = {
+      title: oneLine($("in-title").value, 24),
+      sub: oneLine($("in-sub").value, 40),
+      foot: oneLine($("in-foot").value, 60),
+      theme: THEMES[$("in-theme").value] ? $("in-theme").value : "cafe",
+      layout: lay, land: LAYOUTS[lay][0], cols: LAYOUTS[lay][1],
+      yen: $("in-yen").value,
+      logo: null
+    };
+    s.th = THEMES[s.theme];
+    s.blocks = parseMenu($("in-menu").value, s.yen);
+    return extendSettings(s);
+  }
+
+  // ===== 描く =====
+  function fontOf(th, title) { return (th.serif || (title && th.serifTitle)) ? MINCHO : GOTHIC; }
+  function setFont(ctx, px, w, fam) { ctx.font = (w || "bold") + " " + Math.max(1, Math.floor(px)) + "px " + (fam || GOTHIC); }
+  function fit(ctx, text, maxW, px, minPx, w, fam) {
+    px = Math.floor(px); setFont(ctx, px, w, fam);
+    while (px > minPx && ctx.measureText(text).width > maxW) { px -= 1; setFont(ctx, px, w, fam); }
+    if (ctx.measureText(text).width <= maxW) return text;
+    var a = Array.from(text); while (a.length > 1 && ctx.measureText(a.join("") + "…").width > maxW) a.pop();
+    return a.join("") + "…";
+  }
+  function blockH(b, f) {
+    if (b.t === "h") return f * 120;
+    return f * (b.desc ? 104 : 70);
+  }
+  // 段に流しこむ。入らなければnull
+  function flow(blocks, f, colH, ncol, partial) {
+    var col = 0, y = 0, out = [];
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i], h = blockH(b, f);
+      var need = h + (b.t === "h" && blocks[i + 1] && blocks[i + 1].t === "i" ? blockH(blocks[i + 1], f) : 0);
+      if (y > 0 && y + need > colH) { col++; y = 0; }
+      if (col >= ncol || h > colH) { if (partial) { out.dropped = blocks.slice(i).filter(function (x) { return x.t === "i"; }).length; return out; } return null; }
+      out.push({ b: b, col: col, y: y }); y += h;
+    }
+    out.dropped = 0;
+    return out;
+  }
+  function drawMenu(cv, s, k) {
+    var W = s.land ? A4L : A4S, H = s.land ? A4S : A4L, th = s.th;
+    cv.width = Math.round(W * k); cv.height = Math.round(H * k);
+    var ctx = cv.getContext("2d"); if (!ctx) throw new Error("no canvas");
+    ctx.setTransform(k, 0, 0, k, 0, 0);
+    ctx.fillStyle = th.bg; ctx.fillRect(0, 0, W, H);
+    // 枠
+    var m = 110;
+    if (th.wood) { ctx.fillStyle = th.frame; ctx.fillRect(0, 0, W, m * 0.7); ctx.fillRect(0, H - m * 0.7, W, m * 0.7); ctx.fillRect(0, 0, m * 0.7, H); ctx.fillRect(W - m * 0.7, 0, m * 0.7, H); }
+    else {
+      ctx.strokeStyle = th.frame; ctx.lineWidth = 8; ctx.strokeRect(m * 0.6, m * 0.6, W - m * 1.2, H - m * 1.2);
+      ctx.lineWidth = 3; ctx.strokeRect(m * 0.6 + 22, m * 0.6 + 22, W - m * 1.2 - 44, H - m * 1.2 - 44);
+    }
+    ctx.textBaseline = "middle"; ctx.textAlign = "center";
+    var cx = W / 2, y = m + 120, tf = fontOf(th, true), bf = fontOf(th, false);
+    // ロゴ
+    if (s.logo) {
+      var lh = 300, lw = Math.min(W * 0.5, lh * s.logo.width / Math.max(1, s.logo.height));
+      lh = lw * s.logo.height / s.logo.width;
+      ctx.drawImage(s.logo, cx - lw / 2, y - 40, lw, lh); y += lh + 10;
+    }
+    if (s.title) { ctx.fillStyle = th.accent; ctx.fillText(fit(ctx, s.title, W - m * 3, 170, 60, "bold", tf), cx, y + 60); y += 190; }
+    if (s.sub) { ctx.fillStyle = th.sub; ctx.fillText(fit(ctx, s.sub, W - m * 3, 64, 30, "normal", tf), cx, y + 20); y += 90; }
+    if (s.title || s.sub) {
+      ctx.strokeStyle = th.accent; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(cx - 220, y + 10); ctx.lineTo(cx + 220, y + 10); ctx.stroke();
+      ctx.fillStyle = th.accent; ctx.beginPath(); ctx.arc(cx, y + 10, 10, 0, Math.PI * 2); ctx.fill();
+      y += 70;
+    }
+    var footH = s.foot ? 110 : 0, top = y, bottom = H - m - 60 - footH;
+    var gap = 110, colW = (W - m * 2 - 120 - gap * (s.cols - 1)) / s.cols, left = m + 60;
+    // 大きさを決める(入る中でいちばん大きく)
+    var lo = 0.3, hi = 2.2, best = null, bf2 = 0;
+    for (var it = 0; it < 18; it++) {
+      var mid = (lo + hi) / 2, r = flow(s.blocks, mid, bottom - top, s.cols);
+      if (r) { best = r; bf2 = mid; lo = mid; } else hi = mid;
+    }
+    var f = bf2, avail = bottom - top, used = avail;
+    s.dropped = 0;
+    if (!best) { f = 0.3; best = flow(s.blocks, f, avail, s.cols, true); s.overflow = true; s.dropped = best.dropped; }
+    else {
+      s.overflow = false;
+      // 段の高さをそろえる(入るいちばん低い高さ)→ 上下のまん中に置く
+      var lo2 = 0, hi2 = avail;
+      for (var j = 0; j < 20; j++) { var h2 = (lo2 + hi2) / 2, r2 = flow(s.blocks, f, h2, s.cols); if (r2) { hi2 = h2; best = r2; } else lo2 = h2; }
+      used = 0; best.forEach(function (p) { used = Math.max(used, p.y + blockH(p.b, f)); });
+      top += Math.max(0, (avail - used) / 2.4);
+    }
+    s.scale = f;
+    best.forEach(function (p) {
+      var b = p.b, x = left + p.col * (colW + gap), yy = top + p.y;
+      if (yy > H) return;
+      if (b.t === "h") {
+        var hy = yy + f * 66;
+        if (th.pill) {
+          setFont(ctx, f * 60, "bold", bf); var tw = Math.min(colW, ctx.measureText(b.text).width + f * 80);
+          ctx.fillStyle = th.accent; var rh = f * 84;
+          ctx.beginPath(); ctx.moveTo(x + rh / 2, hy - rh / 2); ctx.arcTo(x + tw, hy - rh / 2, x + tw, hy + rh / 2, rh / 2); ctx.arcTo(x + tw, hy + rh / 2, x, hy + rh / 2, rh / 2); ctx.arcTo(x, hy + rh / 2, x, hy - rh / 2, rh / 2); ctx.arcTo(x, hy - rh / 2, x + tw, hy - rh / 2, rh / 2); ctx.closePath(); ctx.fill();
+          ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.fillText(fit(ctx, b.text, tw - f * 40, f * 60, f * 30, "bold", bf), x + tw / 2, hy);
+        } else {
+          ctx.fillStyle = th.accent; ctx.textAlign = "center";
+          var ht = fit(ctx, b.text, colW, f * 64, f * 30, "bold", tf); ctx.fillText(ht, x + colW / 2, hy);
+          var hw = ctx.measureText(ht).width / 2 + f * 30;
+          ctx.strokeStyle = th.accent; ctx.lineWidth = Math.max(2, f * 3);
+          if (colW / 2 - hw > f * 20) { ctx.beginPath(); ctx.moveTo(x, hy); ctx.lineTo(x + colW / 2 - hw, hy); ctx.moveTo(x + colW / 2 + hw, hy); ctx.lineTo(x + colW, hy); ctx.stroke(); }
+        }
+      } else {
+        var iy = yy + f * 34;
+        if (b.sold) {
+          ctx.textAlign = "right"; ctx.fillStyle = th.accent; var sp = fit(ctx, "売り切れ", colW * 0.4, f * 44, f * 22, "bold", bf); ctx.fillText(sp, x + colW, iy);
+          var spw = ctx.measureText(sp).width;
+          ctx.textAlign = "left"; ctx.fillStyle = th.sub; var snm = fit(ctx, b.name, colW - spw - f * 40, f * 50, f * 26, "bold", bf); ctx.fillText(snm, x, iy);
+          var snw = ctx.measureText(snm).width; ctx.strokeStyle = th.sub; ctx.lineWidth = Math.max(2, f * 4);
+          ctx.beginPath(); ctx.moveTo(x, iy); ctx.lineTo(x + snw, iy); ctx.stroke();
+          return;
+        }
+        if (!b.price) {
+          // 値段のない品(コース料理など)はまん中に
+          ctx.textAlign = "center"; ctx.fillStyle = th.ink;
+          ctx.fillText(fit(ctx, b.name || "", colW, f * 50, f * 26, "bold", bf), x + colW / 2, iy);
+          if (b.desc) { ctx.fillStyle = th.sub; ctx.fillText(fit(ctx, b.desc, colW, f * 36, f * 20, "normal", bf), x + colW / 2, iy + f * 54); }
+          return;
+        }
+        ctx.textAlign = "right"; ctx.fillStyle = th.ink;
+        var pr = fit(ctx, b.price, colW * 0.45, f * 50, f * 26, "bold", bf), pw = ctx.measureText(pr).width;
+        ctx.fillText(pr, x + colW, iy);
+        ctx.textAlign = "left";
+        var nm = fit(ctx, b.name || "", colW - pw - f * 60, f * 50, f * 26, "bold", bf); ctx.fillText(nm, x, iy);
+        if (b.price) {
+          var nw = ctx.measureText(nm).width, d0 = x + nw + f * 20, d1 = x + colW - pw - f * 20;
+          ctx.fillStyle = th.sub; for (var dx = d0; dx < d1; dx += f * 18) { ctx.beginPath(); ctx.arc(dx, iy + f * 12, Math.max(1.5, f * 3), 0, Math.PI * 2); ctx.fill(); }
+        }
+        if (b.desc) { ctx.fillStyle = th.sub; ctx.fillText(fit(ctx, b.desc, colW - f * 20, f * 36, f * 20, "normal", bf), x + f * 10, iy + f * 54); }
+      }
+    });
+    if (s.foot) { ctx.textAlign = "center"; ctx.fillStyle = th.sub; ctx.fillText(fit(ctx, s.foot, W - m * 3, 46, 24, "normal", bf), cx, H - m - 70); }
+    return cv;
+  }
+
+  // ===== 画面 =====
+  var last = null, rTimer = null, pvUrl = null, pvCv = document.createElement("canvas"), pvSeq = 0;
+  function render() {
+    rTimer = null;
+    var s = settings(); syncExtra(s); saveLast();
+    try { drawMenu(pvCv, s, 0.3); } catch (e) { last = null; setSt("st", "見本の画像を作れませんでした。", true); return; }
+    var seq = ++pvSeq;
+    pvCv.toBlob(function (bl) { if (!bl || seq !== pvSeq) return; var old = pvUrl; pvUrl = URL.createObjectURL(bl); $("pvImg").src = pvUrl; if (old) setTimeout(function () { URL.revokeObjectURL(old); }, 1000); }, "image/png");
+    var items = s.blocks.filter(function (b) { return b.t === "i"; }).length, w = [];
+    if (!items) w.push("①のメニューに品名を書いてください。");
+    if (s.overflow) w.push("入りきらない品が" + s.dropped + "品あります(印刷・保存にも入りません)。段を増やすか(A4横・3段など)、品数を減らしてください。");
+    if (parseMenu.cut) w.push("メニューは120行までです(" + parseMenu.cut + "行は入りません)。");
+    else if (s.scale < 0.55 && items) w.push("文字が小さくなっています。段を増やすか、品数を減らすと読みやすくなります。");
+    var wt = w.length ? "⚠ " + w.join(" ") : "";
+    if ($("warn").textContent !== wt) $("warn").textContent = wt;
+    $("info").textContent = items + "品・" + (s.land ? "A4横" : "A4縦") + "・" + s.cols + "段。文字の大きさ " + Math.round(s.scale * 100) + "%(自動)" + (s.land ? "。印刷画面で「横」を選んでください" : "");
+    $("pvImg").alt = "メニュー表の見本: " + (s.title || "名前なし") + "、" + items + "品";
+    $("pageStyle").textContent = "@media print { @page { size: A4 " + (s.land ? "landscape" : "portrait") + "; margin: 0; } #printArea img { width: " + (s.land ? "296mm" : "209mm") + "; height: " + (s.land ? "209mm" : "296mm") + "; } }";
+    last = s;
+  }
+  function changed() { clearTimeout(rTimer); rTimer = setTimeout(render, 200); }
+  function flush() { if (rTimer) { clearTimeout(rTimer); render(); } }
+
+  var printing = false;
+  $("printBtn").addEventListener("click", function () {
+    flush(); if (!last || printing) return;
+    printing = true; setTimeout(function () { printing = false; }, 2000);
+    var area = $("printArea"); area.innerHTML = "";
+    var url;
+    try { var cv = drawMenu(document.createElement("canvas"), last, 1); url = cv.toDataURL("image/png"); cv.width = cv.height = 0; if (url.length < 100) throw new Error("empty"); }
+    catch (e) { setSt("st", "印刷用の画像を作れませんでした。", true); return; }
+    var im = el("img", { alt: "" }); im.src = url; area.appendChild(im);
+    setSt("st", "印刷画面を開きました。A4" + (last.land ? "横" : "縦") + "・倍率100%で印刷します。");
+    track("menu_print", { theme: last.theme, layout: last.layout, logo: last.logo ? 1 : 0 });
+    (im.decode ? im.decode().catch(function () {}) : Promise.resolve()).then(function () { setTimeout(function () { window.print(); }, 50); });
+  });
+  window.addEventListener("afterprint", function () { $("printArea").innerHTML = ""; });
+
+  var saving = false;
+  $("saveBtn").addEventListener("click", function () {
+    flush(); if (!last || saving) return;
+    saving = true;
+    var cv; try { cv = drawMenu(document.createElement("canvas"), last, 1); } catch (e) { saving = false; setSt("st", "画像を作れませんでした。", true); return; }
+    var fname = "menu_" + (last.title || "menu").replace(/[\\\/:*?"<>|]/g, "") + ".png";
+    cv.toBlob(function (bl) {
+      saving = false; cv.width = cv.height = 0;
+      if (!bl) { setSt("st", "画像を作れませんでした。", true); return; }
+      track("menu_save", { theme: last.theme, layout: last.layout });
+      function dl() {
+        var a = document.createElement("a"), url = URL.createObjectURL(bl);
+        a.href = url; a.download = fname; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+        setSt("st", "画像を保存しました。見つからないときは、ダウンロードの一覧を見てください。");
+      }
+      var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      if (touch && navigator.canShare && window.File) {
+        var f = new File([bl], fname, { type: "image/png" });
+        if (navigator.canShare({ files: [f] })) {
+          navigator.share({ files: [f] }).then(function () { setSt("st", "共有メニューを開きました(iPhoneは「画像を保存」で写真に入ります)。"); })
+            .catch(function (e) { if (e && e.name === "AbortError") setSt("st", "保存をやめました。"); else dl(); });
+          return;
+        }
+      }
+      dl();
+    }, "image/png");
+  });
+
+  // ===== 設定の記憶 =====
+  var noSave = false;
+  function snapshot() { var o = {}; document.querySelectorAll("[data-save]").forEach(function (e) { o[e.id] = e.value; }); return o; }
+  function applySnap(o) {
+    if (!o || typeof o !== "object") return false;
+    document.querySelectorAll("[data-save]").forEach(function (e) {
+      if (typeof o[e.id] !== "string") return;
+      var v = o[e.id].slice(0, e.maxLength > 0 ? e.maxLength : 16);
+      if (e.tagName === "SELECT" && ![].some.call(e.options, function (op) { return op.value === v; })) return;
+      if (e.type === "color" && !/^#[0-9a-f]{6}$/i.test(v)) return;
+      e.value = v;
+    });
+    return true;
+  }
+  function saveNow() { if (noSave) return; try { localStorage.setItem(LAST_KEY, JSON.stringify(snapshot())); } catch (e) {} }
+  var saveTimer = null;
+  function saveLast() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 300); }
+  window.addEventListener("pagehide", saveNow);
+  document.querySelectorAll("[data-save]").forEach(function (e) { e.setAttribute("autocomplete", "off"); e.addEventListener(e.tagName === "SELECT" ? "change" : "input", changed); });
+  $("resetAll").addEventListener("click", function () {
+    if (!window.confirm("入力した内容を全部消して、最初の状態に戻します。よろしいですか?")) return;
+    noSave = true; try { localStorage.removeItem(LAST_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  
+
+  var restored = false;
+  try { restored = applySnap(JSON.parse(localStorage.getItem(LAST_KEY) || "null")); } catch (e) {}
+  if (!restored || !$("in-menu").value.trim()) {
+    var p0 = PRESETS["カフェ"];
+    if (!$("in-title").value) $("in-title").value = p0[0];
+    if (!$("in-sub").value) $("in-sub").value = p0[1];
+    $("in-menu").value = p0[2]; lastPresetMenu = p0[2];
+    if (!$("in-foot").value) $("in-foot").value = p0[3];
+  }
+  if (EDITION !== "full") {
+    $("privacyNote").innerHTML = '入力した内容はどこにも送信されません(すべてこのブラウザの中で処理します)。このページでは利用状況の把握のためにアクセス解析(Google Analytics)を使っています。<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener">Googleによるデータの使用について</a>';
+  }
+  render();
+})();
+</script>
+<!--UPSELL_JS_START-->
+<script>
+(function () {
+  "use strict";
+  var q = new URLSearchParams(location.search);
+  if (q.get("obs") === "1" || document.documentElement.classList.contains("obs")) return;
+  // 小さな案内(トースト)は、買い切り版がパソコン向けなので、マウス操作の広い画面でだけ出す
+  var pc = !!(window.matchMedia && matchMedia("(pointer:fine) and (min-width:720px)").matches);
+  var buy = document.getElementById("buyLink");
+  var pro = document.getElementById("pro-section");
+  if (!buy || !pro) return;
+  var FEATS = [], CALM = false;
+  var path = location.pathname.replace(/index\.html$/, "");
+  var KEY_CLOSED = "upsell_closed_until:" + path, KEY_SHOWN = "upsell_shown:" + path;
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  function sess(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
+  function gtagEv(name, p) { if (!window.dataLayer) return; (function () { window.dataLayer.push(arguments); })("event", name, p || {}); }
+
+  var shown = false;
+  function blocked() {
+    if (shown || sess(KEY_SHOWN) === "1") return true;
+    var until = Number(store(KEY_CLOSED) || 0);
+    return until && Date.now() < until;
+  }
+  function feats() {
+    if (FEATS.length) return FEATS;
+    var out = [];
+    var lis = pro.querySelectorAll(".feat-list li");
+    for (var i = 0; i < lis.length && out.length < 3; i++) {
+      var all = lis[i].textContent.replace(/\s+/g, " ").trim();
+      if (/スマホ|HTMLファイル|パソコンで使う/.test(all)) continue;
+      var st = lis[i].querySelectorAll("strong");
+      var t = st.length === 1 ? st[0].textContent : all.split(/[::。]/)[0];
+      t = t.replace(/[((][^()()]*[))]/g, "").replace(/\s+/g, " ").trim();
+      if (t.length > 40) t = t.slice(0, 39) + "…";
+      if (t) out.push(t);
+    }
+    return out;
+  }
+  // 「〜してください」「できません」など、失敗の表示が出ていたら案内しない
+  function failed() {
+    var els = document.querySelectorAll('[role="status"], [role="alert"], [aria-live]');
+    for (var i = 0; i < els.length; i++) {
+      if (pro.contains(els[i]) || !els[i].offsetParent) continue;
+      if (/ください|できません|できませんでした|失敗|ありません|エラー/.test(els[i].textContent)) return true;
+    }
+    return false;
+  }
+  function proVisible() {
+    var r = pro.getBoundingClientRect();
+    return r.top < innerHeight && r.bottom > 0;
+  }
+  function show(trigger) {
+    if (!pc || blocked() || (trigger === "action" && failed()) || proVisible()) return;
+    var list = feats();
+    if (!list.length) return;
+    shown = true;
+    sess(KEY_SHOWN, "1");
+    var box = document.createElement("aside");
+    box.className = "upsell-toast" + (CALM ? " upsell-calm" : "");
+    box.setAttribute("aria-label", "買い切り版のご案内");
+    box.setAttribute("aria-live", "polite");
+    document.body.appendChild(box);
+    var p = document.createElement("p");
+    p.textContent = trigger === "limit" && CALM ? "件数が多いときは、パソコン用の買い切り版(¥100・税込)で続けられます:"
+      : trigger === "limit"
+      ? "この先は買い切り版の機能です。パソコン用の買い切り版(¥100・税込)なら:"
+      : CALM ? "件数が多いときや、香典返しの準備をまとめたいときのために、パソコン用の買い切り版(¥100・税込)もあります:" : "うまくできましたか? パソコン用の買い切り版(¥100・税込)なら、さらに:";
+    var ul = document.createElement("ul");
+    list.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+    var a = document.createElement("a");
+    a.className = "upsell-go";
+    a.id = "upsellToastLink";
+    a.href = buy.href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "BOOTHで見る(新しいタブ)";
+    var bg = getComputedStyle(buy).backgroundColor;
+    if (bg && !/rgba?\(0, 0, 0, 0\)|transparent/.test(bg)) a.style.background = bg;
+    var x = document.createElement("button");
+    x.type = "button";
+    x.className = "upsell-x";
+    x.setAttribute("aria-label", "この案内を閉じる");
+    x.textContent = "×";
+    function close(remember) {
+      if (box.parentNode) box.parentNode.removeChild(box);
+      document.removeEventListener("keydown", onKey);
+      if (remember) store(KEY_CLOSED, String(Date.now() + 7 * 864e5));
+    }
+    // Escはページ側の操作(選択解除など)にも使われるので、案内の中にフォーカスがある時だけ閉じる
+    function onKey(e) { if (e.key === "Escape" && box.contains(document.activeElement)) close(true); }
+    x.addEventListener("click", function () { close(true); });
+    a.addEventListener("click", function () { setTimeout(function () { close(false); }, 0); });
+    document.addEventListener("keydown", onKey);
+    setTimeout(function () {
+      var note = document.createElement("small");
+      note.className = "upsell-note";
+      note.textContent = "スマホではファイルを開けない機種があります";
+      box.appendChild(x); box.appendChild(p); box.appendChild(ul); box.appendChild(a); box.appendChild(note);
+    }, 50);
+    gtagEv("upsell_show", { trigger: trigger });
+  }
+
+  // 保存・コピー・印刷・書き出しを押した直後(結果を受け取れたタイミング)
+  var OK = /保存|コピー|印刷|書き出|ダウンロード|共有|PDF/;
+  var NG = /読み込|リセット|消|削除|このブラウザに保存|確認|イメージを見る|戻/;
+  document.addEventListener("click", function (e) {
+    var el = e.target && e.target.closest ? e.target.closest("button, a[download], input[type=button], input[type=submit]") : null;
+    if (!el || el.closest("#pro-section, .upsell-toast, #anshin")) return;
+    var label = (el.textContent || el.value || "").replace(/\s+/g, " ");
+    if (!OK.test(label) || NG.test(label)) return;
+    setTimeout(function () { show("action"); }, 1500);
+  }, true);
+
+  // 無料版の上限まわり
+  // (1) ページが出す「買い切り版」の一文に、購入欄へのリンクを足す(スマホでも)。🔒のタブは薄く表示されているので入れない
+  // (2) 案内(パソコンのみ)は、はっきりした合図のときだけ出す: 🔒のクリック・買い切り版にふれたalert・
+  //     初めて出た「〜まで/のみ/以降/入っていません」の上限の一文(計算のたびに出る誘導文や、同じ文の描き直しでは出さない)
+  var SKIP = "#pro-section, .upsell-toast, .upsell-top, #anshin, a, button, label, select, option, h1, h2, h3, .badge, header, footer, nav, textarea, pre, code, [contenteditable], svg";
+  var LIMIT = /まで|のみ|以降|入っていません/;
+  var seenText = {}, ready = false;
+  function goPro(e) {
+    if (e) e.preventDefault();
+    pro.setAttribute("tabindex", "-1");
+    pro.scrollIntoView({ behavior: "smooth", block: "start" });
+    pro.focus({ preventScroll: true });
+  }
+  function linkify(root, deep) {
+    var limitHit = false;
+    var els = root.matches("p, div, span, li") ? [root] : [];
+    if (deep) els = els.concat([].slice.call(root.querySelectorAll("p, div, span, li")));
+    els.forEach(function (el) {
+      if (el.closest(SKIP) || el.closest('[role="radio"], [role="option"], [role="tab"], [role="button"], [tabindex]:not([tabindex="-1"])') || el.querySelector("a, button, p, div, li, input, label")) return;
+      // 選択肢の「○○(買い切り版)」ではなく、文として買い切り版にふれている要素だけ
+      var own = "";
+      for (var n = el.firstChild; n; n = n.nodeType === 1 && n.className === "upsell-inline" ? null : n.nextSibling) if (n.nodeType === 3) own += n.nodeValue;
+      own = own.trim();
+      if (own.indexOf("買い切り版") < 0 || /[((]買い切り版[))]$/.test(own) || /^🔒/.test(own)) return;
+      var key = own.replace(/\d+/g, "#");
+      if (ready && !seenText[key] && LIMIT.test(own) && !el.closest(".teaser, #teaser, [id$=teaser], #tz")) limitHit = true;
+      seenText[key] = 1;
+      if (el.querySelector(".upsell-inline")) return;
+      var a = document.createElement("a");
+      a.className = "upsell-inline";
+      a.href = "#pro-section";
+      a.setAttribute("aria-label", "くわしく:買い切り版の説明へ移動");
+      a.textContent = "くわしく";
+      var ar = document.createElement("span");
+      ar.setAttribute("aria-hidden", "true");
+      ar.textContent = " ↓";
+      a.appendChild(ar);
+      a.addEventListener("click", goPro);
+      el.appendChild(document.createTextNode(" "));
+      el.appendChild(a);
+    });
+    return limitHit;
+  }
+  linkify(document.body, true);
+  setTimeout(function () { ready = true; }, 1500);
+  var topLink = document.querySelector("#upsellTop a");
+  if (topLink) topLink.addEventListener("click", goPro);
+  new MutationObserver(function (ms) {
+    // 変わったところだけを調べる(足された要素はその中も、文字の変更は親要素だけ)
+    var hit = false, done = new Set();
+    function check(t, deep) {
+      if (!t || t.nodeType !== 1 || done.has(t) || t.closest(".upsell-toast")) return;
+      done.add(t);
+      if (linkify(t, deep)) hit = true;
+    }
+    ms.forEach(function (m) {
+      if (m.type === "characterData") { check(m.target.parentNode, false); return; }
+      check(m.target, false);
+      for (var i = 0; i < m.addedNodes.length; i++) if (m.addedNodes[i].nodeType === 1) check(m.addedNodes[i], true);
+    });
+    if (hit) setTimeout(function () { show("limit"); }, 800);
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  document.addEventListener("click", function (e) {
+    var el = e.target && e.target.closest ? e.target.closest("button, div, span, li") : null;
+    var first = el && el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild.nodeValue : "";
+    if (!/^\s*🔒/.test(first) || e.target.closest("#pro-section")) return;
+    if (pc) setTimeout(function () { show("limit"); }, 300); else goPro();
+  }, true);
+  var origAlert = window.alert;
+  window.alert = function (msg) {
+    var r = origAlert.apply(window, arguments);
+    if (/買い切り版/.test(String(msg))) setTimeout(function () { show("limit"); }, 300);
+    return r;
+  };
+})();
+</script>
+<!--UPSELL_JS_END-->
+</body>
+</html>
